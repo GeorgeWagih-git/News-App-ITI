@@ -16,4 +16,7 @@ class SuccessDataState extends IndexStates {
 
 class LoadingDataState extends IndexStates {}
 
-class ErrorDataState extends IndexStates {}
+class ErrorDataState extends IndexStates {
+  String e;
+  ErrorDataState({required this.e});
+}

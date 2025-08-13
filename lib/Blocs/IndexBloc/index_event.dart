@@ -9,3 +9,5 @@ class GetNewsDataEvent extends IndexEvent {
   int index;
   GetNewsDataEvent({required this.index});
 }
+
+class GetALLDataEvent extends IndexEvent {}

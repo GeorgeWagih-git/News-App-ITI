@@ -18,17 +18,24 @@ class IndexBloc extends Bloc<IndexEvent, IndexStates> {
         category: categorytitels[1],
       );
       if (event.index == 0) {
-        response = await DioHelper.getEveryThingData();
+        add(GetALLDataEvent());
       } else {
         response = await DioHelper.getCategoryData(
           category: categorytitels[event.index - 1],
         );
       }
-      print(response.data);
       var responseObj = JsonData.fromJson(response.data);
       response.statusCode == 200
           ? emit(SuccessDataState(response: responseObj))
-          : emit(ErrorDataState());
+          : emit(ErrorDataState(e: response.statusMessage.toString()));
+    });
+    on<GetALLDataEvent>((event, emit) async {
+      emit(LoadingDataState());
+      Response response = await DioHelper.getEveryThingData();
+      var responseObj = JsonData.fromJson(response.data);
+      response.statusCode == 200
+          ? emit(SuccessDataState(response: responseObj))
+          : emit(ErrorDataState(e: response.statusMessage.toString()));
     });
   }
 }

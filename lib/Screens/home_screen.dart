@@ -10,53 +10,84 @@ import 'package:newproject/constanrs.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   int currentIndex = 0;
-
+  bool welcome = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: homeindexbloc,
-      child: BlocBuilder<IndexBloc, IndexStates>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                titels[currentIndex],
-                style: TextStyle(fontWeight: FontWeight.bold),
+      value: homeindexbloc..add(GetNewsDataEvent(index: currentIndex)),
+      child: BlocListener<IndexBloc, IndexStates>(
+        listener: (context, state) {
+          if (state is ErrorDataState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.e,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 3),
               ),
-              centerTitle: true,
-              actions: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode)),
-              ],
-            ),
-            body: ContentScreen(index: currentIndex),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  label: 'Business',
+            );
+          } else if (state is SuccessDataState && !welcome) {
+            welcome = true;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "Welcome Back",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.science),
-                  label: 'Science',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.sports),
-                  label: 'Sports',
-                ),
-              ],
-              currentIndex: currentIndex,
-              onTap: (value) {
-                currentIndex = value;
-                BlocProvider.of<IndexBloc>(
-                  context,
-                ).add(GetNewsDataEvent(index: value));
-              },
-            ),
-          );
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
         },
+        child: BlocBuilder<IndexBloc, IndexStates>(
+          builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  titels[currentIndex],
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                centerTitle: true,
+                actions: [
+                  IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode)),
+                ],
+              ),
+              body: ContentScreen(index: currentIndex),
+              bottomNavigationBar: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.business),
+                    label: 'Business',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.science),
+                    label: 'Science',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.sports),
+                    label: 'Sports',
+                  ),
+                ],
+                currentIndex: currentIndex,
+                onTap: (value) {
+                  currentIndex = value;
+                  BlocProvider.of<IndexBloc>(
+                    context,
+                  ).add(GetNewsDataEvent(index: value));
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
