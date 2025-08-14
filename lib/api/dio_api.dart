@@ -14,7 +14,8 @@ class DioHelper {
         },
         onResponse: (response, handler) async {
           print(
-            "🖨️response Status code : ${response.statusCode} \n 🖨️response : ${response.data}",
+            "🖨️response Status code : ${response.statusCode} ",
+            //\n 🖨️response : ${response.data}
           );
           return handler.next(response);
         },

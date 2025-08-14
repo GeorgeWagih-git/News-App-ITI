@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newproject/Blocs/IndexBloc/index_bloc.dart';
 import 'package:newproject/Blocs/IndexBloc/index_event.dart';
 import 'package:newproject/Blocs/IndexBloc/index_states.dart';
+import 'package:newproject/Blocs/theme_bloc/theme_bloc.dart';
+import 'package:newproject/Blocs/theme_bloc/theme_events.dart';
 import 'package:newproject/Screens/content_screen.dart';
 import 'package:newproject/Screens/search_screen.dart';
 import 'package:newproject/constanrs.dart';
@@ -61,7 +63,18 @@ class HomeScreen extends StatelessWidget {
                     },
                     icon: Icon(Icons.search),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode)),
+                  BlocBuilder<ThemeBloc, bool>(
+                    builder: (context, state) {
+                      return IconButton(
+                        onPressed: () {
+                          BlocProvider.of<ThemeBloc>(
+                            context,
+                          ).add(ChangeTheme(isLight: !state));
+                        },
+                        icon: Icon(Icons.dark_mode),
+                      );
+                    },
+                  ),
                 ],
               ),
               body: ContentScreen(index: currentIndex),
