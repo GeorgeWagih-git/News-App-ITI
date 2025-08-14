@@ -32,7 +32,7 @@ class DioHelper {
       queryParameters: {
         'category': category,
         'country': 'us',
-        'apiKey': "277b751d41ae4fc88afc9fd741990638",
+        'apiKey': "0c4f7a13d5774eebb87a0ddf38be2b3a",
       },
     );
   }
@@ -41,8 +41,20 @@ class DioHelper {
     return await dioObj.get(
       'v2/everything',
       queryParameters: {
-        'q': 'bitcoin',
-        'apiKey': "277b751d41ae4fc88afc9fd741990638",
+        'q': 'EveryThing',
+        'apiKey': "0c4f7a13d5774eebb87a0ddf38be2b3a",
+      },
+    );
+  }
+
+  static Future<Response> searchDatainEverything({
+    required String query,
+  }) async {
+    return dioObj.get(
+      'v2/everything',
+      queryParameters: {
+        'q': query,
+        'apiKey': "0c4f7a13d5774eebb87a0ddf38be2b3a",
       },
     );
   }

@@ -37,5 +37,15 @@ class IndexBloc extends Bloc<IndexEvent, IndexStates> {
           ? emit(SuccessDataState(response: responseObj))
           : emit(ErrorDataState(e: response.statusMessage.toString()));
     });
+    on<SearchinEverythingDataEvent>((event, emit) async {
+      emit(SearchLoadingDataState());
+      Response response = await DioHelper.searchDatainEverything(
+        query: event.query,
+      );
+      var responseObj = JsonData.fromJson(response.data);
+      response.statusCode == 200
+          ? emit(SearchSuccessDataState(response: responseObj))
+          : emit(SearchErrorDataState(e: response.statusMessage.toString()));
+    });
   }
 }

@@ -11,3 +11,9 @@ class GetNewsDataEvent extends IndexEvent {
 }
 
 class GetALLDataEvent extends IndexEvent {}
+
+class SearchinEverythingDataEvent extends IndexEvent {
+  String query;
+
+  SearchinEverythingDataEvent({required this.query});
+}

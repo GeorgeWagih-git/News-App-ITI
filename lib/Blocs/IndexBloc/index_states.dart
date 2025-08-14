@@ -20,3 +20,15 @@ class ErrorDataState extends IndexStates {
   String e;
   ErrorDataState({required this.e});
 }
+
+class SearchSuccessDataState extends IndexStates {
+  JsonData response;
+  SearchSuccessDataState({required this.response});
+}
+
+class SearchLoadingDataState extends IndexStates {}
+
+class SearchErrorDataState extends IndexStates {
+  String e;
+  SearchErrorDataState({required this.e});
+}

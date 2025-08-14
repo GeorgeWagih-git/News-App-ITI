@@ -4,6 +4,7 @@ import 'package:newproject/Blocs/IndexBloc/index_bloc.dart';
 import 'package:newproject/Blocs/IndexBloc/index_event.dart';
 import 'package:newproject/Blocs/IndexBloc/index_states.dart';
 import 'package:newproject/Screens/content_screen.dart';
+import 'package:newproject/Screens/search_screen.dart';
 import 'package:newproject/constanrs.dart';
 
 // ignore: must_be_immutable
@@ -52,7 +53,14 @@ class HomeScreen extends StatelessWidget {
                 ),
                 centerTitle: true,
                 actions: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SearchScreen()),
+                      );
+                    },
+                    icon: Icon(Icons.search),
+                  ),
                   IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode)),
                 ],
               ),
